@@ -4,7 +4,7 @@ Spreadsheet::ParseXLSX - parse XLSX files
 
 # VERSION
 
-version 0.28
+version 0.29
 
 # SYNOPSIS
 
@@ -144,16 +144,21 @@ Jesse Luehrs <doy@tozt.net>
 # CONTRIBUTORS
 
 - Alexey Mazurin <mazurin.alexey@gmail.com>
+- Daryl Anderman <daryl@273kelvin.ca>
 - Dave Clarke &lt;david\_clarke@verizon.net>
 - Fitz Elliott <felliott@fiskur.org>
 - FL <f20@reckon.co.uk>
+- Gareth Tunley <gjtunley@gmail.com>
 - Meredith Howard <mhoward@roomag.org>
-- MichaelDaum <daum@michaeldaumconsulting.com>
+- Michael Daum <daum@michaeldaumconsulting.com>
+- Nick Moore <nick.moore@strategicdata.com.au>
+- oharakouhei <gofue0723@gmail.com>
 - rdboisvert <rdbprog@gmail.com>
 - Ricardo Signes <rjbs@cpan.org>
 - Robert Boisvert &lt;robert.boisvert@PABET-J069H12.sncrcorp.net>
 - Steve Simms <steve@deefs.net>
 - Stuart Watt <stuart@morungos.com>
+- theevilapplepie <theevilapplepie@gmail.com>
 - zhouzhen1 <zhouzhen1@gmail.com>
 
 # COPYRIGHT AND LICENSE

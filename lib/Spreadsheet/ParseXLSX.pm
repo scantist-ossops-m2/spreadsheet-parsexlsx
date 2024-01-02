@@ -520,7 +520,7 @@ sub _parse_sheet_links {
                     # Store the target URL in a hash by relationship id
                     $rels->{$relationship->att('Id')} = $relationship->att('Target');
                 }
-                
+
                 $twig->purge;
             },
         },
@@ -586,7 +586,7 @@ sub _parse_sheet_links {
                         $col, # End Column
                     ];
                 }
-                
+
                 $twig->purge;
             },
         },

@@ -4,7 +4,7 @@ Spreadsheet::ParseXLSX - parse XLSX files
 
 # VERSION
 
-version 0.29
+version 0.30
 
 # SYNOPSIS
 

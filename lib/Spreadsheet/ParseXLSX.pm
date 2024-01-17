@@ -80,7 +80,7 @@ sub parse {
   }
 
   if (openhandle($file)) {
-    bless $file, 'IO::File' if ref($file) eq 'GLOB';    # sigh
+    bless $file, 'IO::File' if ref($file) eq 'GLOB'; # sigh
     my $fh =
       ref($file) eq 'File::Temp'
       ? IO::File->new("<&=" . fileno($file))
@@ -112,7 +112,7 @@ sub _check_signature {
 
   my $signature = '';
   if (openhandle($file)) {
-    bless $file, 'IO::File' if ref($file) eq 'GLOB';    # sigh
+    bless $file, 'IO::File' if ref($file) eq 'GLOB'; # sigh
     $file->read($signature, 2);
     $file->seek(-2, IO::File::SEEK_CUR);
   } elsif (ref($file) eq 'SCALAR') {
@@ -149,7 +149,7 @@ sub _parse_workbook {
 
   $workbook->{FmtClass} = $formatter || Spreadsheet::ParseExcel::FmtDefault->new;
 
-  my $themes = $self->_parse_themes((values %{$files->{themes}})[0]);    # XXX
+  my $themes = $self->_parse_themes((values %{$files->{themes}})[0]); # XXX
 
   $workbook->{Color} = $themes->{Color};
 
@@ -400,7 +400,7 @@ sub _parse_sheet {
           } elsif ($type eq 'str' || $type eq 'inlineStr') {
             $long_type = 'Text';
           } else {
-            die "unimplemented type $type";    # XXX
+            die "unimplemented type $type"; # XXX
           }
 
           my $format_idx = $cell->att('s') || 0;
@@ -423,7 +423,7 @@ sub _parse_sheet {
           my $cell = Spreadsheet::ParseExcel::Cell->new(
             Val => $val,
             Type => $long_type,
-            Merged => undef,    # fix up later
+            Merged => undef, # fix up later
             Format => $format,
             FormatNo => $format_idx,
             (
@@ -525,26 +525,26 @@ sub _parse_sheet_links {
 
           # Add the hyperlink
           $cell->{Hyperlink} = [
-            $hyperlink->att('display') || $cell->{_Value} || undef,    # Description
-            $destination_url,    # Target
-            undef,    # Target Frame
-            $row,    # Start Row
-            $row,    # End Row
-            $col,    # Start Column
-            $col,    # End Column
+            $hyperlink->att('display') || $cell->{_Value} || undef, # Description
+            $destination_url, # Target
+            undef, # Target Frame
+            $row, # Start Row
+            $row, # End Row
+            $col, # Start Column
+            $col, # End Column
           ];
         } else {
           # This is an internal hyperlink
 
           # Add the hyperlink
           $cell->{Hyperlink} = [
-            $hyperlink->att('display') || $cell->{_Value} || undef,    # Description
-            $hyperlink->att('location'),    # Target
-            undef,    # Target Frame
-            $row,    # Start Row
-            $row,    # End Row
-            $col,    # Start Column
-            $col,    # End Column
+            $hyperlink->att('display') || $cell->{_Value} || undef, # Description
+            $hyperlink->att('location'), # Target
+            undef, # Target Frame
+            $row, # Start Row
+            $row, # End Row
+            $col, # Start Column
+            $col, # End Column
           ];
         }
 
@@ -957,7 +957,10 @@ sub _extract_files {
   my $type_base = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships';
 
   my $rels = $self->_parse_xml($zip, $self->_rels_for(''),);
-  my $wb_name = ($rels->find_nodes(qq<//packagerels:Relationship[\@Type="$type_base/officeDocument"]>))[0]->att('Target');
+  my $node = ($rels->find_nodes(qq<//packagerels:Relationship[\@Type="$type_base/officeDocument"]>))[0];
+  die "invalid workbook" unless $node;
+
+  my $wb_name = $node->att('Target');
   $wb_name =~ s{^/}{};
   my $wb_xml = $self->_parse_xml($zip, $wb_name);
 
@@ -1175,6 +1178,7 @@ sub _new_twig {
       'http://schemas.openxmlformats.org/officeDocument/2006/relationships' => 'rels',
       'http://schemas.openxmlformats.org/drawingml/2006/main' => 'drawmain',
     },
+    no_xxe => 1,
     keep_original_prefix => 1,
     %opts,
   );

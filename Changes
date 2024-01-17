@@ -2,6 +2,10 @@ Revision history for Spreadsheet-ParseXLSX
 
 {{$NEXT}}
 
+      - Fix xml external entity (XEE) injection bug
+      - added unit test for support of purl.oclc.org namespace ... see issue #7
+      - removed tidyness tests again as it fails on weaver'ed code
+
 0.29  2024-01-02
 
       - Merge pull request #1 from theevilapplepie/master: Fix for 'Argument "" isn't numeric in addition (+) at /usr/local/shar…

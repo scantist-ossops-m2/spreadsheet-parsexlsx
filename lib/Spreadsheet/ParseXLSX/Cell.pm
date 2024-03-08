@@ -5,7 +5,7 @@ use warnings;
 
 # VERSION
 
-# ABSTRACT: wrapper class around L<Spreadsheet::ParseExcel::Cell> 
+# ABSTRACT: wrapper class around L<Spreadsheet::ParseExcel::Cell>
 
 use Spreadsheet::ParseXLSX ();
 use base 'Spreadsheet::ParseExcel::Cell';
@@ -41,9 +41,9 @@ Returns true if the cell is merged being part of the given sheet, located at
 the given row and column. Returns undef if the current cell is not connected to
 any sheet:
 
-C<$sheet> defaults to the cell's C<{Sheet}> property, 
+C<$sheet> defaults to the cell's C<{Sheet}> property,
 C<$row> to C<{Row}> and
-C<$col> to the C<{Col}.
+C<$col> to the C<{Col}>.
 
 
 =cut

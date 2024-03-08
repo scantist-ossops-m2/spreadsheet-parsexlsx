@@ -15,6 +15,7 @@ use Spreadsheet::ParseExcel;
 use XML::Twig;
 
 use Spreadsheet::ParseXLSX::Decryptor;
+use Spreadsheet::ParseXLSX::Cell;
 
 =head1 SYNOPSIS
 
@@ -420,10 +421,9 @@ sub _parse_sheet {
           }
 
           my $formula = $cell->first_child('s:f');
-          my $cell = Spreadsheet::ParseExcel::Cell->new(
+          my $cell = Spreadsheet::ParseXLSX::Cell->new(
             Val => $val,
             Type => $long_type,
-            Merged => undef, # fix up later
             Format => $format,
             FormatNo => $format_idx,
             (
@@ -447,11 +447,14 @@ sub _parse_sheet {
   $sheet_xml->parse($sheet_file);
 
   if ($sheet->{Cells}) {
+    # SMELL: we have to connect cells their sheet as well as their position
     for my $r (0 .. $#{$sheet->{Cells}}) {
       my $row = $sheet->{Cells}[$r] or next;
       for my $c (0 .. $#$row) {
         my $cell = $row->[$c] or next;
-        $cell->{Merged} = $self->_is_merged($sheet, $r, $c);
+        $cell->{Sheet} = $sheet;
+        $cell->{Row} = $r;
+        $cell->{Col} = $c;
       }
     }
   } else {
@@ -512,7 +515,7 @@ sub _parse_sheet_links {
         # Do I have a cell?
         unless ($cell) {
           # No - just create an empty value for now
-          $cell = $sheet->{Cells}[$row][$col] = Spreadsheet::ParseExcel::Cell->new();
+          $cell = $sheet->{Cells}[$row][$col] = Spreadsheet::ParseXLSX::Cell->new();
         }
 
         # Is this an external hyperlink I've parsed from the rels?

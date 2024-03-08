@@ -2,6 +2,8 @@ Revision history for Spreadsheet-ParseXLSX
 
 {{$NEXT}}
 
+      - Require minimum version of Archive::Zip
+
 0.31  2024-01-18
 
       - CVE-2024-23525: fixed in previous release

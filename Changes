@@ -2,6 +2,8 @@ Revision history for Spreadsheet-ParseXLSX
 
 {{$NEXT}}
 
+0.33  2024-03-08
+
       - performance fix computing merged cells
 
 0.32  2024-03-08

@@ -25,16 +25,6 @@ use base 'Spreadsheet::ParseExcel::Cell';
   my $isMerged = $cell->is_merged();
   # see Spreadsheet::ParseExcel::Cell for further documentation
 
-=cut
-
-sub DESTROY {
-  my $self = shift;
-
-  #$self->SUPER::DESTROY();
-
-  undef $self->{Sheet}; # break circular dependencies
-}
-
 =method is_merged($sheet, $row, $col)
 
 Returns true if the cell is merged being part of the given sheet, located at
@@ -53,7 +43,7 @@ sub is_merged {
 
   return $self->{Merged} if defined $self->{Merged};
 
-  $sheet //= $self->{Sheet};
+  $sheet //= $Spreadsheet::ParseXLSX::Worksheet::_registry{$self->{Sheet}};
   $row //= $self->{Row};
   $col //= $self->{Col};
 

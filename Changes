@@ -2,6 +2,10 @@ Revision history for Spreadsheet-ParseXLSX
 
 {{$NEXT}}
 
+      - Merge pull request #13 from nrdvana/master
+      - Fix memory leak between Sheet and Cell, and related to XML::Twig
+      - Unit test to verify workbook garbage collection
+
 0.33  2024-03-08
 
       - performance fix computing merged cells

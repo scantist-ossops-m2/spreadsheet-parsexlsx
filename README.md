@@ -4,7 +4,7 @@ Spreadsheet::ParseXLSX - parse XLSX files
 
 # VERSION
 
-version 0.33
+version 0.34
 
 # SYNOPSIS
 
@@ -149,8 +149,8 @@ Jesse Luehrs <doy@tozt.net>
 - Fitz Elliott <felliott@fiskur.org>
 - FL <f20@reckon.co.uk>
 - Gareth Tunley <gjtunley@gmail.com>
-- M Conrad <mike@nrdvana.net>
 - Meredith Howard <mhoward@roomag.org>
+- Michael Conrad <mike@nrdvana.net>
 - Michael Daum <daum@michaeldaumconsulting.com>
 - Nick Moore <nick.moore@strategicdata.com.au>
 - oharakouhei <gofue0723@gmail.com>

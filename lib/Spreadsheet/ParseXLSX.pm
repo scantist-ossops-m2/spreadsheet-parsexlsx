@@ -15,6 +15,7 @@ use Spreadsheet::ParseExcel;
 use XML::Twig;
 
 use Spreadsheet::ParseXLSX::Decryptor;
+use Spreadsheet::ParseXLSX::Worksheet;
 use Spreadsheet::ParseXLSX::Cell;
 
 =head1 SYNOPSIS
@@ -176,7 +177,7 @@ sub _parse_workbook {
   my @sheets = map {
     my $idx = $_->att('rels:id');
     if ($files->{sheets}{$idx}) {
-      my $sheet = Spreadsheet::ParseExcel::Worksheet->new(
+      my $sheet = Spreadsheet::ParseXLSX::Worksheet->new(
         Name => $_->att('name'),
         _Book => $workbook,
         _SheetNo => $idx,
@@ -211,6 +212,10 @@ sub _parse_workbook {
 sub _parse_sheet {
   my $self = shift;
   my ($sheet, $sheet_file) = @_;
+  # The XML::Twig instance does not clean up properly.  If we give it callbacks with
+  # strong references to $self or $sheet, we end up with a memory leak.
+  Scalar::Util::weaken($self);
+  Scalar::Util::weaken($sheet);
 
   $sheet->{MinRow} = 0;
   $sheet->{MinCol} = 0;
@@ -448,11 +453,12 @@ sub _parse_sheet {
 
   if ($sheet->{Cells}) {
     # SMELL: we have to connect cells their sheet as well as their position
+    my $sheet_addr= Scalar::Util::refaddr($sheet);
     for my $r (0 .. $#{$sheet->{Cells}}) {
       my $row = $sheet->{Cells}[$r] or next;
       for my $c (0 .. $#$row) {
         my $cell = $row->[$c] or next;
-        $cell->{Sheet} = $sheet;
+        $cell->{Sheet} = $sheet_addr;
         $cell->{Row} = $r;
         $cell->{Col} = $c;
       }

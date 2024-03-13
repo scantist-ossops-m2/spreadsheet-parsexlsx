@@ -23,11 +23,25 @@ use base 'Spreadsheet::ParseExcel::Worksheet';
 # of cells.
 our %_registry;
 
+=method new()
+
+creates a new worksheet and adds it to the registry
+
+=cut
+
 sub new {
   my $self = shift->next::method(@_);
+
   Scalar::Util::weaken($_registry{Scalar::Util::refaddr($self)} = $self);
-  $self;
+
+  return $self;
 }
+
+=method DESTROY()
+
+removes the object from the registry while destroying it
+
+=cut
 
 sub DESTROY {
   delete $_registry{Scalar::Util::refaddr($_[0])};

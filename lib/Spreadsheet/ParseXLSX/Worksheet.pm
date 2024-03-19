@@ -30,7 +30,7 @@ creates a new worksheet and adds it to the registry
 =cut
 
 sub new {
-  my $self = shift->next::method(@_);
+  my $self = shift->SUPER::new(@_);
 
   Scalar::Util::weaken($_registry{Scalar::Util::refaddr($self)} = $self);
 
